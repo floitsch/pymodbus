@@ -2,6 +2,8 @@
 """Test register write messages."""
 import unittest
 
+from .modbus_mocks import MockContext, MockLastValuesContext
+
 from pymodbus.payload import BinaryPayloadBuilder, Endian
 from pymodbus.pdu import ModbusExceptions
 from pymodbus.register_write_message import (
@@ -13,7 +15,6 @@ from pymodbus.register_write_message import (
     WriteSingleRegisterResponse,
 )
 
-from .modbus_mocks import MockContext
 
 # ---------------------------------------------------------------------------#
 #  Fixture
@@ -138,10 +139,11 @@ class WriteRegisterMessagesTest(unittest.TestCase):
 
     def test_mask_write_register_request_execute(self):
         """Test write register request valid execution"""
-        context = MockContext(valid=True, default=0x0000)
+        context = MockLastValuesContext(valid=True, default=0x0000)
         handle = MaskWriteRegisterRequest(0x0000, 0x0101, 0x1010)
         result = handle.execute(context)
         self.assertTrue(isinstance(result, MaskWriteRegisterResponse))
+        self.assertEqual([0x0000], context.last_values)
 
     def test_mask_write_register_request_invalid_execute(self):
         """Test write register request execute with invalid data"""
