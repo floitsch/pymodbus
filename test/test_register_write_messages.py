@@ -139,11 +139,11 @@ class WriteRegisterMessagesTest(unittest.TestCase):
 
     def test_mask_write_register_request_execute(self):
         """Test write register request valid execution"""
-        context = MockLastValuesContext(valid=True, default=0x0000)
-        handle = MaskWriteRegisterRequest(0x0000, 0x0101, 0x1010)
+        context = MockLastValuesContext(valid=True, default=0xAA55)
+        handle = MaskWriteRegisterRequest(0x0000, 0x0F0F, 0x00FF)
         result = handle.execute(context)
         self.assertTrue(isinstance(result, MaskWriteRegisterResponse))
-        self.assertEqual([0x0000], context.last_values)
+        self.assertEqual([0x0AF5], context.last_values)
 
     def test_mask_write_register_request_invalid_execute(self):
         """Test write register request execute with invalid data"""

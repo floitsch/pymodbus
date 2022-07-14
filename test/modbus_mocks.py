@@ -36,7 +36,7 @@ class MockLastValuesContext(IModbusSlaveContext):
         """Initialize."""
         self.valid = valid
         self.default = default
-        self.last_values = -1
+        self.last_values = []
 
     def validate(self, fx, address, count=0):
         """Validate values."""
