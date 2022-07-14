@@ -146,7 +146,7 @@ class WriteRegisterMessagesTest(unittest.TestCase):
         self.assertEqual([0x0000], context.last_values)
 
     def test_mask_write_register_request_invalid_execute(self):
-        """Test write register request execute with invalid data"""
+        """Test write register re quest execute with invalid data"""
         context = MockContext(valid=False, default=0x0000)
         handle = MaskWriteRegisterRequest(0x0000, -1, 0x1010)
         result = handle.execute(context)
